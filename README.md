@@ -10,8 +10,7 @@ Each product in the dataset:
 |---|---|---|
 | `name` | string | Product name |
 | `category` | string | Product category |
-| `description` | string | Short description |
-| `fullDescription` | string | Full description text |
+| `description` | string | Product description (text after the heading) |
 | `imageUrl` | string | Product image URL |
 | `productCode` | string \| null | SKU code (e.g. UASC.B220.000.00-01) |
 | `specifications` | object | Tech specs (capacity, weight, range, etc.) |
