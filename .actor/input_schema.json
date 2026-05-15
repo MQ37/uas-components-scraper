@@ -1,0 +1,24 @@
+{
+    "title": "UAS Components Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "categories": {
+            "title": "Categories",
+            "description": "Category slugs to scrape. Leave empty to scrape all categories: camera-systems, antennas, launch-and-landing-systems, pitot-tubes, batteries, software.",
+            "type": "array",
+            "editor": "json",
+            "items": {
+                "type": "string"
+            }
+        },
+        "maxProducts": {
+            "title": "Max Products",
+            "description": "Maximum number of products to scrape (0 = unlimited).",
+            "type": "integer",
+            "editor": "number",
+            "default": 0,
+            "minimum": 0
+        }
+    }
+}

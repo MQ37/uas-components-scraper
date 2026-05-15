@@ -1,0 +1,9 @@
+{
+    "actorSpecification": 1,
+    "name": "uas-components-scraper",
+    "title": "UAS Components Product Scraper",
+    "description": "Scrapes all products from uascomponents.com using Playwright for JS-rendered content — UAV camera systems, antenna trackers, launchers, pitot tubes, batteries, software. Outputs structured JSON with names, descriptions, specs, product codes, and images.",
+    "version": "1.0",
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile"
+}
