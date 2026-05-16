@@ -1,21 +1,19 @@
-# UAS Components Scraper
+# uas-components-scraper
 
-Apify Actor that scrapes all products from [uascomponents.com](https://uascomponents.com) — a Ukrainian manufacturer of UAV components including camera systems, antenna trackers, launch systems, pitot tubes, batteries, and software.
+Apify Actor that scrapes UAV components from [uascomponents.com](https://uascomponents.com) — a Ukrainian manufacturer of camera systems, antenna trackers, launch systems, pitot tubes, batteries, and software.
 
-## Output Schema
+## What it scrapes
 
-Each product in the dataset:
+Crawls all product categories on uascomponents.com and extracts product name, category, description, images, SKU codes, and technical specifications.
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | string | Product name |
-| `category` | string | Product category |
-| `description` | string | Product description (text after the heading) |
-| `imageUrl` | string | Product image URL |
-| `productCode` | string \| null | SKU code (e.g. UASC.B220.000.00-01) |
-| `specifications` | object | Tech specs (capacity, weight, range, etc.) |
-| `sourceUrl` | string | Source page URL |
-| `scrapedAt` | string | ISO timestamp |
+## Quick start
+
+```bash
+pnpm install
+pnpm dev         # watch mode with tsx
+pnpm build       # compile TypeScript
+pnpm start       # run compiled output
+```
 
 ## Input
 
@@ -27,29 +25,38 @@ Each product in the dataset:
 }
 ```
 
-- **categories** — optional array of category slugs. Empty = all categories.
-- **maxProducts** — limit results (0 = unlimited).
-- **includeImages** — include image URLs.
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `categories` | string[] | `[]` (all) | Category slugs to scrape. Empty = all categories |
+| `maxProducts` | number | `0` (unlimited) | Max products to extract |
+| `includeImages` | boolean | `false` | Include image URLs in output |
 
-## Development
+## Output schema
 
-```bash
-pnpm install
-pnpm dev           # Run locally with tsx
-pnpm build         # Compile TypeScript
-pnpm start         # Run compiled version
+```json
+{
+  "name": "string",
+  "category": "string",
+  "description": "string",
+  "imageUrl": "string",
+  "productCode": "string | null (SKU, e.g. UASC.B220.000.00-01)",
+  "specifications": {
+    "capacity": "string | undefined",
+    "weight": "string | undefined",
+    "range": "string | undefined"
+  },
+  "sourceUrl": "string",
+  "scrapedAt": "ISO 8601 date"
+}
 ```
 
-## Site Structure
+## Site structure
 
-The site is a Weblium static site with category pages:
+uascomponents.com is a Weblium static site. Category pages list products with images and short descriptions. Product detail pages contain full specifications in structured HTML. No JavaScript rendering needed.
 
-| Slug | Category |
-|---|---|
-| `/camera-systems` | Camera Systems |
-| `/antennas` | Antenna Trackers |
-| `/launch-and-landing-systems` | Launch & Landing |
-| `/pitot-tubes` | Pitot Tubes |
-| `/batteries` | Batteries |
-| `/software` | Software |
-| `/products` | All (combined) |
+## Tech stack
+
+- **Crawlee** — CheerioCrawler
+- **Cheerio** — HTML parsing
+- **Apify SDK** — Actor lifecycle + dataset storage
+- Node.js 22+
